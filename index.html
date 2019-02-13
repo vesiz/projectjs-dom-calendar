@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+<body>
+    <div id="events-calender-wrapper">
+        <div id="calendar-legend-wrapper">
+            <div id="calender-info">
+                <div id="currently-showing">Currently showing: </div>
+                <br>
+                <div>Choose a week and year to view a specific week.</div>
+                <div>Choose a month and year to view a specific month.</div>
+                <br>
+                <div>Switch between the next and prevoius month.</div>
+                <div>Switch between the next and prevoius year.</div>
+            </div>
+            <div id="calender-controls">
+
+                <div id="get-currents">
+                    <button id="get-current-week">Get current week</button>
+                    <button id="get-current-month">Get current month</button>
+                </div>
+
+                <br>
+
+                <div id="get-specifics">
+                    <div id="get-specific-week">
+                        <input id="week-input" type="number" min="1" max="52" name="week-input" placeholder="Week" required="true">
+                        <input class="year-input" type="number" min="1900" max="10000" name="year-input" placeholder="Year" required="true">
+                        <input id="submit-searched-week" type="submit" value="Go!">
+                    </div>
+                    <div id="get-specific-month">
+                        <select id="month-input">
+                            <option>January</option>
+                            <option>February</option>
+                            <option>March</option>
+                            <option>April</option>
+                            <option>May</option>
+                            <option>June</option>
+                            <option>July</option>
+                            <option>August</option>
+                            <option>September</option>
+                            <option>October</option>
+                            <option>November</option>
+                            <option>December</option>                  
+                        </select>
+                        <input class="year-input" type="number" min="1900" max="10000" name="year-input" placeholder="Year" required>
+                        <input id="submit-searched-month" type="submit" value="Go!">
+                    </div>
+                </div>
+
+                <br>
+
+                <div id="get-month-siblings">
+                    <button id="get-prev-month">Get prev. month</button>
+                    <button id="get-next-month">Get next  month</button>
+                </div>
+
+                <div id="get-year-siblings">
+                    <button id="get-prev-year">Get prev. year</button>
+                    <button id="get-next-year">Get next  year</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="calender-cells-wrapper">
+            
+        </div>
+    </div>
+
+    <script src="library.js"></script>
+    <script src="date-functions.js"></script>
+    <script src="UI-control.js"></script>
+
+</body>
+
+<!--  -->
+</html>

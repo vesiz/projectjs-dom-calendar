@@ -1,0 +1,55 @@
+*{
+	margin:0;
+	padding:0;
+	font-family: 'Raleway', sans-serif;
+} 
+
+#events-calender-wrapper{
+	width: 840px;
+	margin: auto;
+	margin-top: 50px;
+}
+
+#calendar-legend-wrapper{
+	overflow: auto;
+	border: 1.5px black solid;
+	padding: 20px;
+}
+
+#calender-info{
+	position: relative;
+	float: left;
+}
+
+#calender-controls{
+	position: relative;
+	float: right;
+}
+
+#get-specific-week > input{
+	width: 30.85%;
+	margin-bottom: 3px;
+}
+
+#get-specific-month > input{
+	width: 27%;
+}
+
+#get-month-siblings > button, #get-year-siblings > button{
+	width: 48.9%;
+	margin-bottom: 3px;
+}
+
+.row{
+	overflow: auto;
+}
+
+.column{
+	box-sizing: border-box;
+	height: 100px;
+	width: 120px;
+	border: 1.5px black solid;
+	position: relative;
+	float: left;
+	padding: 10px;
+}
