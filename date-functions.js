@@ -74,7 +74,7 @@ var dateFunctions = {
 
     getMonthDays : function(_month, _year){
         return new Date(_year, _month, 0).getDate();
-    },
+    }
     
 
 };
