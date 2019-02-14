@@ -1,11 +1,28 @@
 var actionGetCurrentWeek   = DOMlib.get("get-current-week");
 var actionGetCurrentMonth  = DOMlib.get("get-current-month");
+
 var actionGetSpecificWeek  = DOMlib.get("submit-searched-week");
 var actionGetSpecificMonth = DOMlib.get("submit-searched-month");
+
 var actionGetPrevMonth     = DOMlib.get("get-prev-month");
 var actionGetNextMonth     = DOMlib.get("get-next-month");
+
 var actionGetPrevYear      = DOMlib.get("get-prev-year");
 var actionGetNextYear      = DOMlib.get("get-next-year");
+
+var Event = function(_date, _info){
+    this.eDate = _date;
+    this.eInfo = _info;
+}
+
+var eventsCollection = [];
+
+eventsCollection.push(new Event("2/17/2019", "Birthday celebration"));
+eventsCollection.push(new Event("6/1/2019", "Dentist appointment"));
+eventsCollection.push(new Event("8/17/2019", "Internship lecture"));
+eventsCollection.push(new Event("2/25/2019", "Running errands"));
+eventsCollection.push(new Event("5/3/2019", "Job interview"));
+eventsCollection.push(new Event("2/25/2019", "Get wasted"));
 
 
 var createWeekWrapper = function(_weekId){
@@ -19,6 +36,7 @@ var createDayCell = function(_weekId, _dayId, _cellInfo){
     DOMlib.addChild(_weekId, "div", _dayId);
     DOMlib.changeElementAttr(_dayId, "class", "column");
     DOMlib.changeinnerHTML(_dayId, _cellInfo);
+    DOMlib.changeElementAttr(_dayId, "onclick", "createButtons(this.id)");
 
     return DOMlib.get(_dayId);
 }
@@ -33,6 +51,12 @@ var colorCell = function(_givenDate, _dayId){
 
     if(currentDate.getTime() === _givenDate.getTime()){
         DOMlib.changeElementAttr(_dayId, "style", {"background" : "yellow"});
+    }
+
+    for(var i = 0; i < eventsCollection.length; i++){
+        if(_givenDate.getTime() == new Date(eventsCollection[i].eDate).getTime()){
+            DOMlib.changeElementAttr(_dayId, "style", {"background" : "lightblue"});  
+        }
     }
 };
 
@@ -53,6 +77,12 @@ var printWeek = function(_weeknumber, _yearnumber){
     }
 
     DOMlib.changeinnerHTML("currently-showing", "Currently showing: Week " + _weeknumber + " of " + _yearnumber);
+
+    DOMlib.get("month-input").selectedIndex = 0;
+    DOMlib.getAll(".year-input")[1].value = null;
+
+    DOMlib.get("week-input").value = _weeknumber;
+    DOMlib.getAll(".year-input")[0].value = _yearnumber;
 };
 
 var printMonth = function(_month, _year){
@@ -82,6 +112,13 @@ var printMonth = function(_month, _year){
     }    
 
     DOMlib.changeinnerHTML("currently-showing", "Currently showing: " + dateFunctions.getMonthName(_month) + " " + _year);
+
+    DOMlib.get("month-input").selectedIndex = _month;
+    DOMlib.getAll(".year-input")[1].value = _year;
+
+    
+    DOMlib.get("week-input").value = null;
+    DOMlib.getAll(".year-input")[0].value = null;
 };
 
 actionGetCurrentWeek.addEventListener("click", function(e){
@@ -127,8 +164,8 @@ actionGetSpecificWeek.addEventListener("click", function(e){
 
     printWeek(searchedWeek, searchedYear);
 
-    DOMlib.get("week-input").value = "";
-    DOMlib.getAll(".year-input")[0].value = "";
+    DOMlib.get("month-input").selectedIndex = 0;
+    DOMlib.getAll(".year-input")[1].value = null;
 });
 
 actionGetSpecificMonth.addEventListener("click", function(e){
@@ -150,8 +187,8 @@ actionGetSpecificMonth.addEventListener("click", function(e){
 
     printMonth(searchedMonth, searchedYear);
 
-    DOMlib.get("month-input").selectedIndex = 0;
-    DOMlib.getAll(".year-input")[1].value = "";
+    DOMlib.get("week-input").value = null;
+    DOMlib.getAll(".year-input")[0].value = null;
 });
 
 actionGetPrevMonth.addEventListener("click", function(e){
@@ -249,3 +286,60 @@ actionGetNextYear.addEventListener("click", function(e){
         printWeek(searchedWeek, searchedYear);
     }
 });
+
+var createButtons = function(_dayId){
+    if(DOMlib.get("createEvent") != null  && DOMlib.get("viewEvents") != null){
+        DOMlib.removeElement("createEvent");
+        DOMlib.removeElement("viewEvents");
+    }
+
+    DOMlib.addChild(_dayId, "button", "createEvent", "Create Event");
+    DOMlib.addChild(_dayId, "button", "viewEvents", "View Event(s)");
+
+    var actionAddEvent = DOMlib.get("createEvent");
+    var actionViewEvent = DOMlib.get("viewEvents");
+
+    var day = _dayId.replace("day" , "");
+    var month = DOMlib.get("month-input").selectedIndex;
+    var year = DOMlib.getAll(".year-input")[1].value;
+
+    var cellDate = new Date(year, month, day);
+
+    actionAddEvent.addEventListener("click", function(e){
+        e.preventDefault();   
+
+        var eventInfo = prompt("Add event info.");
+        var dateString = (cellDate.getMonth() + 1) + "/" + cellDate.getDate() + "/" + cellDate.getFullYear();
+        eventsCollection.push(new Event(dateString, eventInfo));
+        colorCell(cellDate, _dayId);
+        
+        if(eventInfo == null || eventInfo == ""){
+            alert("Event not created.");
+        }
+        else{
+            alert("Event created");
+        }
+    
+    });
+
+    actionViewEvent.addEventListener("click", function(e){
+        e.preventDefault();
+
+        var eventsString = "";
+
+        if(DOMlib.get(_dayId).style["background"] == "lightblue"){
+            for(var i = 0; i < eventsCollection.length; i++){
+                if(cellDate.getTime() === new Date(eventsCollection[i].eDate).getTime()){
+                    eventsString += "For this date you have: \n" + eventsCollection[i].eInfo + "\n";
+                }
+            }
+            alert(eventsString);
+        }
+        else{
+            alert("There aren't any events for this date");
+        }
+
+    });
+
+};
+
