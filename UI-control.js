@@ -325,12 +325,12 @@ var createButtons = function(_dayId){
     actionViewEvent.addEventListener("click", function(e){
         e.preventDefault();
 
-        var eventsString = "";
+        var eventsString = "For this date you have: \n";
 
         if(DOMlib.get(_dayId).style["background"] == "lightblue"){
             for(var i = 0; i < eventsCollection.length; i++){
                 if(cellDate.getTime() === new Date(eventsCollection[i].eDate).getTime()){
-                    eventsString += "For this date you have: \n" + eventsCollection[i].eInfo + "\n";
+                    eventsString += eventsCollection[i].eInfo + "\n";
                 }
             }
             alert(eventsString);
