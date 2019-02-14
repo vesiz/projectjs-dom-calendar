@@ -53,3 +53,11 @@
 	float: left;
 	padding: 10px;
 }
+
+#createEvent, #viewEvents{
+	position: relative;
+	margin: 3px;
+	width: 100%;
+	right: 3px;
+	top: 3px;
+}
